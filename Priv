@@ -959,13 +959,13 @@ end))
     end
 do
 
-makefolder("glxck.cc")
+makefolder("glxckcc")
 
 local PuppyModule = {
     Instance = {}
 }
 
-local Window = libary:new({name = "glxck.cc || gui 🤑", accent = Color3.fromRGB(244, 0, 0), textsize = 13})
+local Window = libary:new({name = "glxck cc || gui 🤑", accent = Color3.fromRGB(244, 0, 0), textsize = 13})
 local AimingTab = Window:page({name = "Camlock/Dot 💸"})
 local MiscTab = Window:page({name = "Misc 💰"})
 
@@ -980,7 +980,7 @@ local MiscCharSettings = MiscTab:section({name = "Character Cheats",side = "left
 local MiscNorSettings = MiscTab:section({name = "Normal Cheats",side = "left", size = 100})
 
 local ConfigSection = MiscTab:section({name = "Config",side = "right", size = 250})
-local ConfigLoader = ConfigSection:configloader({folder = "glxck.cc"})
+local ConfigLoader = ConfigSection:configloader({folder = "glxckcc"})
 
 SAimSection:toggle({name = "CamLock Enable", def = false, callback = function(Boolean)
 	getgenv().Settings.FearLas.Camera.Enabled = bool
@@ -1187,10 +1187,6 @@ getgenv().Ambience = Boolean
                     end
 end})
 
--- Misc Char
-MiscCharSettings:button({name = "Nil Char", callback = function()
- NilBody()
-end})
 
 
 AimingTab:openpage()
