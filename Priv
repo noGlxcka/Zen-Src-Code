@@ -166,7 +166,6 @@ if player then
     getgenv().AutoPredType = "Normal"
     getgenv().Resolver = false
 
-    local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
     local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
 
     function SendNotification(text)
@@ -176,28 +175,6 @@ if player then
             {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(117, 14, 7)}
         )
     end
-
-    function calculateVelocity(initialPos, finalPos, timeInterval)
-        local displacement = finalPos - initialPos
-        local velocity = displacement / timeInterval
-        return velocity
-    end
-
-    game:GetService('RunService').RenderStepped:connect(function(deltaTime)
-        if getgenv().Resolver == true and enabled and Plr then 
-            local character = Plr.Character
-            if character then
-                local lastPosition = character.HumanoidRootPart.Position
-                task.wait()
-                local currentPosition = character.HumanoidRootPart.Position
-                local velocity = calculateVelocity(lastPosition, currentPosition, deltaTime)
-                character.HumanoidRootPart.AssemblyLinearVelocity = velocity
-                character.HumanoidRootPart.Velocity = velocity
-                lastPosition = currentPosition
-            end
-        end
-    end)
-end
 
 --// Change Prediction,  AutoPrediction Must Be Off
     local lplr = game.Players.LocalPlayer
