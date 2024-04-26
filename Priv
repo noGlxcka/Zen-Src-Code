@@ -1,5 +1,5 @@
---// Main Libarys \\--
-local libary = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/lib"))()
+--// Main Libraries \\--
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/lib"))()
 
 -- Lock
 local V3 = Vector3.new
@@ -28,94 +28,94 @@ getgenv().Settings = {
         ["LOCKTYPE"] = "Namecall",
         ["TargetStats"] = false,
         ["Resolver"] = {
-              ["Enabled"] = false,
-              ["Type"] = "None",
+            ["Enabled"] = false,
+            ["Type"] = "None",
         },
-       ["Camera"] = {
-        ["Enabled"] = false,
-        ["HoodCustomsBypass"] = false,
-     },
+        ["Camera"] = {
+            ["Enabled"] = false,
+            ["HoodCustomsBypass"] = false,
+        },
         ["OnHit"] = {
-             ["Enabled"] = true,
-             ["Hitchams"] = {
-                  ["Enabled"] = false,
-                  ["Color"] = Color3.fromRGB(0,0,139),
-                  ["Transparency"] = 0,
-                  ["Material"] = "ForceField",
-             },
+            ["Enabled"] = true,
+            ["Hitchams"] = {
+                ["Enabled"] = false,
+                ["Color"] = Color3.fromRGB(0,0,139),
+                ["Transparency"] = 0,
+                ["Material"] = "ForceField",
+            },
             ["Hitsound"] = {
-                  ["Enabled"] = false,
-                  ["Sound"] = "hitsounds/sparkle.wav",
-                  ["Volume"] = 2,
+                ["Enabled"] = false,
+                ["Sound"] = "hitsounds/sparkle.wav",
+                ["Volume"] = 2,
             },
         }
     },
-	["Silent"] = {
-		["Enabled"] = false,
-		["AimPart"] = "HumanoidRootPart",
-		["WallCheck"] = false,
-		["Visualize"] = false,
-		["Prediction"] = {
-		   ["Horizontal"] = 0.15,
-		   ["Vertical"] = 0.05,
-		},
-	    ["AutoPrediction"] = {
-	        ["Enabled"] = true,
-	        ["Type"] = "Normal", --//Normal, Custom
-           ["ping20_30"] = 0.12588,
-           ["ping30_40"] = 0.11911,
-           ["ping40_50"] = 0.12471,
-           ["ping50_60"] = 0.13766,
-           ["ping60_70"] = 0.13731,
-           ["ping70_80"] = 0.13951,
-           ["ping80_90"] = 0.14181,
-           ["ping90_100"] = 0.148,
-           ["ping100_110"] = 0.156,
-           ["ping110_120"] = 0.1567,
-           ["ping120_130"] = 0.1601,
-           ["ping130_140"] = 0.1637,
-           ["ping140_150"] = 0.173,
-           ["ping150_160"] = 0.1714,
-           ["ping160_170"] = 0.1863,
-           ["ping170_180"] = 0.1872,
-           ["ping180_190"] = 0.1848,
-           ["ping190_200"] = 0.1865,
-	    },
-		["Mode"] = "Namecall", --index,namecal
-	},
-	["FOV"] = {
-		["Enabled"] = false,
-		["Size"] = 23,
-		["Filled"] = false,
-		["Thickness"] = 0.66,
-		["Transparency"] = 0.9,
-		["Color"] = Color3.fromRGB(255,255,255),
-	},
-	["Misc"] = {
-	    ["NoDelay"] = true,
-	    ["AutoReload"] = true,
-	    ["AutoAir"] = {
-	        ["Enabled"] = true,
-	        ["Interval"] = 0.5,
-	    },
-	    ["CMDS"] = { 
-	        ["Enabled"] = false,
-	        ["FOVPrefix"] = "B",
-	        ["Prediction"] = "A",
-	   },
-	},
-	["Checks"] = { --entirely not
-	    ["UnlovkOnKO"] = false,
-	    ["TrashTalkOnKO"] = false,
-	},
-	["Resolution"] = {
-	    ["Value"] = 1,
-	   },
-	["Resolvers"] = {  --entirely not
-	    ["Enabled"] = false,
-	    ["AutoDetect"] = false,
-	    ["Type"] = "Recalculator",
-	},
+    ["Silent"] = {
+        ["Enabled"] = false,
+        ["AimPart"] = "HumanoidRootPart",
+        ["WallCheck"] = false,
+        ["Visualize"] = false,
+        ["Prediction"] = {
+            ["Horizontal"] = 0.15,
+            ["Vertical"] = 0.05,
+        },
+        ["AutoPrediction"] = {
+            ["Enabled"] = true,
+            ["Type"] = "Normal", --//Normal, Custom
+            ["ping20_30"] = 0.12588,
+            ["ping30_40"] = 0.11911,
+            ["ping40_50"] = 0.12471,
+            ["ping50_60"] = 0.13766,
+            ["ping60_70"] = 0.13731,
+            ["ping70_80"] = 0.13951,
+            ["ping80_90"] = 0.14181,
+            ["ping90_100"] = 0.148,
+            ["ping100_110"] = 0.156,
+            ["ping110_120"] = 0.1567,
+            ["ping120_130"] = 0.1601,
+            ["ping130_140"] = 0.1637,
+            ["ping140_150"] = 0.173,
+            ["ping150_160"] = 0.1714,
+            ["ping160_170"] = 0.1863,
+            ["ping170_180"] = 0.1872,
+            ["ping180_190"] = 0.1848,
+            ["ping190_200"] = 0.1865,
+        },
+        ["Mode"] = "Namecall", --index,namecal
+    },
+    ["FOV"] = {
+        ["Enabled"] = false,
+        ["Size"] = 23,
+        ["Filled"] = false,
+        ["Thickness"] = 0.66,
+        ["Transparency"] = 0.9,
+        ["Color"] = Color3.fromRGB(255,255,255),
+    },
+    ["Misc"] = {
+        ["NoDelay"] = true,
+        ["AutoReload"] = true,
+        ["AutoAir"] = {
+            ["Enabled"] = true,
+            ["Interval"] = 0.5,
+        },
+        ["CMDS"] = { 
+            ["Enabled"] = false,
+            ["FOVPrefix"] = "B",
+            ["Prediction"] = "A",
+        },
+    },
+    ["Checks"] = { --entirely not
+        ["UnlovkOnKO"] = false,
+        ["TrashTalkOnKO"] = false,
+    },
+    ["Resolution"] = {
+        ["Value"] = 1,
+    },
+    ["Resolvers"] = {  --entirely not
+        ["Enabled"] = false,
+        ["AutoDetect"] = false,
+        ["Type"] = "Recalculator",
+    },
     ["Visuals"] = {
         ["Ambient"] = {
             ["Enabled"] = false,
@@ -139,6 +139,7 @@ getgenv().Settings = {
         },
     },
 }
+
 getgenv().DistancesMid = 50
 getgenv().DistancesClose = 10
 getgenv().AimSpeed = 1
