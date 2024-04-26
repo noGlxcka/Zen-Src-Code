@@ -227,6 +227,3 @@ end})
 
 
 AimingTab:openpage()
-
--- Init --
-end)
