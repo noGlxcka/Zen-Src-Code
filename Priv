@@ -185,34 +185,23 @@ if player then
     local enabled = false
     local mouse = game.Players.LocalPlayer:GetMouse()
     local placemarker = Instance.new("Part", game.Workspace)
-    function makemarker(Parent, Adornee, Color, Size, Size2)
-        local e = Instance.new("BillboardGui", Parent)
-        e.Name = "PP"
-        e.Adornee = Adornee
-        e.Size = UDim2.new(Size, Size2, Size, Size2)
-        e.AlwaysOnTop = getgenv().Settings.FearLas.DOT
-        local a = Instance.new("Frame", e)
-        if getgenv().Settings.FearLas.DOT == true then
-        a.Size = UDim2.new(1, 1, 1, 1)
-        else
-        a.Size = UDim2.new(0, 0, 0, 0)
-        end
-        if getgenv().Settings.FearLas.DOT == true then
-        a.Transparency = 0
-        a.BackgroundTransparency = 0
-        else
-        a.Transparency = 1
-        a.BackgroundTransparency = 1
-        end
-        a.BackgroundColor3 = Color
-        local g = Instance.new("UICorner", a)
-        if getgenv().Settings.FearLas.DOT == false then
-        g.CornerRadius = UDim.new(1, 1)
-        else
-        g.CornerRadius = UDim.new(1, 1) 
-        end
-        return(e)
-    end
+
+    function makemarker(Parent, Adornee, Color)
+    local e = Instance.new("BillboardGui", Parent)
+    e.Adornee = Adornee
+    e.Size = UDim2.new(0.3, 0, 0.3, 0)
+    e.AlwaysOnTop = true
+    
+    local a = Instance.new("Frame", e)
+    a.Size = UDim2.new(1, 0, 1, 0)
+    a.Transparency = 0
+    a.BackgroundColor3 = Color
+    local g = Instance.new("UICorner", a)
+    g.CornerRadius = UDim.new(1, 1)
+    
+    return e
+end
+
     local data = game.Players:GetPlayers()
     function noob(player)
         local character
