@@ -1,6 +1,14 @@
---// Main Libraries \\--
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/lib"))()
---// ORBIT \\--
+--// Main Libarys \\--
+local libary = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/lib"))()
+local NotifyLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/notify"))()
+local Notify = NotifyLibrary.Notify
+
+--// Service Handler \\--
+local GetService = setmetatable({}, {
+    __index = function(self, key)
+        return game:GetService(key)
+    end
+})--// ORBIT \\--
 local Players = game:GetService("Players")
 local Camera = game:GetService("Workspace").CurrentCamera
 
@@ -91,10 +99,7 @@ AAMainSection:dropdown({name = "Orbit", def = , max = 40, options = function()
         end
 end})
 
-AAMainSection:toggle({
-    name = "Orbit",
-    def = false,
-    callback = function(enabled)
+AAMainSection:toggle({name = "Orbit", def = false, callback = function(enabled)
         if enabled then
             if getgenv().SelectedPlayer then
                 orbitAroundPlayer(getgenv().SelectedPlayer)
@@ -109,119 +114,17 @@ end})
 
 
 MiscMoveSettings:button({name = "Fly (X)", callback = function()
- local mouse = game.Players.LocalPlayer:GetMouse()
- localplayer = game.Players.LocalPlayer
- if workspace:FindFirstChild("Core") then
-  workspace.Core:Destroy()
- end
- local Core = Instance.new("Part")
- Core.Name = "Core"
- Core.Size = Vector3.new(0.05, 0.05, 0.05)
- spawn(function()
-  Core.Parent = workspace
-  local Weld = Instance.new("Weld", Core)
-  Weld.Part0 = Core
-  Weld.Part1 = localplayer.Character.LowerTorso
-  Weld.C0 = CFrame.new(0, 0, 0)
- end)
- workspace:WaitForChild("Core")
- local torso = workspace.Core
- flying = true
- local speed=10
- local keys={a=false,d=false,w=false,s=false}
- local e1
- local e2
- local function start()
- local pos = Instance.new("BodyPosition",torso)
- local gyro = Instance.new("BodyGyro",torso)
- pos.Name="EPIXPOS"
- pos.maxForce = Vector3.new(math.huge, math.huge, math.huge)
- pos.position = torso.Position
- gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
- gyro.cframe = torso.CFrame
- repeat wait() localplayer.Character.Humanoid.PlatformStand = true
-  local new=gyro.cframe - gyro.cframe.p + pos.position
-  if not keys.w and not keys.s and not keys.a and not keys.d then
-   speed=5
-  end
-  if keys.w then
-   new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
-   speed=speed+0
-  end
-  if keys.s then
-   new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
-   speed=speed+0
-  end
-  if keys.d then
-   new = new * CFrame.new(speed,0,0)
-   speed=speed+0
-  end
-  if keys.a then
-   new = new * CFrame.new(-speed,0,0)
-   speed=speed+0
-  end
-  if speed>10 then
-   speed=5
-  end
-  pos.position=new.p
-  if keys.w then
-   gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(-math.rad(speed*0),0,0)
-  elseif keys.s then
-   gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(math.rad(speed*0),0,0)
-  else
-   gyro.cframe = workspace.CurrentCamera.CoordinateFrame
-  end
- until flying == false
- if gyro then gyro:Destroy() end
- if pos then pos:Destroy() end
- flying=false
- localplayer.Character.Humanoid.PlatformStand=false
- speed=10
- end
- e1=mouse.KeyDown:connect(function(key)
-  if not torso or not torso.Parent then flying=false e1:disconnect() e2:disconnect() return end
-  if key=="w" then
-   keys.w=true
-  elseif key=="s" then
-   keys.s=true
-  elseif key=="a" then
-   keys.a=true
-  elseif key=="d" then
-   keys.d=true
-  elseif key=="x" then
-   if flying==true then
-    flying=false
-   else
-    flying=true
-    start()
-   end
-  end
- end)
- e2=mouse.KeyUp:connect(function(key)
-  if key=="w" then
-   keys.w=false
-  elseif key=="s" then
-   keys.s=false
-  elseif key=="a" then
-   keys.a=false
-  elseif key=="d" then
-   keys.d=false
-  end
- end)
- start()
+ print("niga")
 end})
-
 -- MiscToolSettings
 MiscToolSettings:button({name = "Ambience", callback = function()
-getgenv().Ambience = Boolean
-                        while getgenv().Ambience do
-                            wait()
-                            game:GetService("Lighting").Ambient = getgenv().Ambiencecolor
-                        end
-                        if getgenv().Ambience == false then
-                            game:GetService("Lighting").Ambient = Color3.fromRGB(0, 0, 0)
-                        end
-                    end
+    while getgenv().Ambience do
+        wait()
+        game:GetService("Lighting").Ambient = getgenv().Ambiencecolor
+    end
+    if not getgenv().Ambience then
+        game:GetService("Lighting").Ambient = Color3.fromRGB(0, 0, 0)
+    end
 end})
 
 
