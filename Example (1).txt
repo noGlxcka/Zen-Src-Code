@@ -1,0 +1,1743 @@
+--// Main Libarys \\--
+local libary = loadstring(game:HttpGet("https://raw.githubusercontent.com/imagoodpersond/puppyware/main/lib"))()
+
+-- Lock
+local V3 = Vector3.new
+local V2 = Vector2.new
+local inf = math.huge
+getgenv().Settings = {
+    ["FearLas"] = {
+        ["Enabled"] = false,
+        ["DOT"] = true,
+        ["AIRSHOT"] = false,
+        ["Prediction"] = {
+            ["Horizontal"] = 0.185,
+            ["Vertical"] = 0.1,
+        },
+        ["CamPrediction"] = {
+            ["Prediction"] = {
+                ["Horizontal"] = 0.185,
+                ["Vertical"] = 0.1,
+            },
+        },
+        ["NOTIF"] = true,
+        ["AUTOPRED"] = false,
+        ["AdvancedAutoPred"] = false,
+        ["FOV"] = inf,
+        ["RESOLVER"] = false,
+        ["LOCKTYPE"] = "Namecall",
+        ["TargetStats"] = false,
+        ["Resolver"] = {
+              ["Enabled"] = false,
+              ["Type"] = "None",
+        },
+       ["Camera"] = {
+        ["Enabled"] = false,
+        ["HoodCustomsBypass"] = false,
+     },
+        ["OnHit"] = {
+             ["Enabled"] = true,
+             ["Hitchams"] = {
+                  ["Enabled"] = false,
+                  ["Color"] = Color3.fromRGB(0,0,139),
+                  ["Transparency"] = 0,
+                  ["Material"] = "ForceField",
+             },
+            ["Hitsound"] = {
+                  ["Enabled"] = false,
+                  ["Sound"] = "hitsounds/sparkle.wav",
+                  ["Volume"] = 2,
+            },
+        }
+    },
+	["Silent"] = {
+		["Enabled"] = false,
+		["AimPart"] = "HumanoidRootPart",
+		["WallCheck"] = false,
+		["Visualize"] = false,
+		["Prediction"] = {
+		   ["Horizontal"] = 0.15,
+		   ["Vertical"] = 0.05,
+		},
+	    ["AutoPrediction"] = {
+	        ["Enabled"] = true,
+	        ["Type"] = "Normal", --//Normal, Custom
+           ["ping20_30"] = 0.12588,
+           ["ping30_40"] = 0.11911,
+           ["ping40_50"] = 0.12471,
+           ["ping50_60"] = 0.13766,
+           ["ping60_70"] = 0.13731,
+           ["ping70_80"] = 0.13951,
+           ["ping80_90"] = 0.14181,
+           ["ping90_100"] = 0.148,
+           ["ping100_110"] = 0.156,
+           ["ping110_120"] = 0.1567,
+           ["ping120_130"] = 0.1601,
+           ["ping130_140"] = 0.1637,
+           ["ping140_150"] = 0.173,
+           ["ping150_160"] = 0.1714,
+           ["ping160_170"] = 0.1863,
+           ["ping170_180"] = 0.1872,
+           ["ping180_190"] = 0.1848,
+           ["ping190_200"] = 0.1865,
+	    },
+		["Mode"] = "Namecall", --index,namecal
+	},
+	["FOV"] = {
+		["Enabled"] = false,
+		["Size"] = 23,
+		["Filled"] = false,
+		["Thickness"] = 0.66,
+		["Transparency"] = 0.9,
+		["Color"] = Color3.fromRGB(255,255,255),
+	},
+	["Misc"] = {
+	    ["NoDelay"] = true,
+	    ["AutoReload"] = true,
+	    ["AutoAir"] = {
+	        ["Enabled"] = true,
+	        ["Interval"] = 0.5,
+	    },
+	    ["CMDS"] = { 
+	        ["Enabled"] = false,
+	        ["FOVPrefix"] = "B",
+	        ["Prediction"] = "A",
+	   },
+	},
+	["Checks"] = { --entirely not
+	    ["UnlovkOnKO"] = false,
+	    ["TrashTalkOnKO"] = false,
+	},
+	["Resolution"] = {
+	    ["Value"] = 1,
+	   },
+	["Resolvers"] = {  --entirely not
+	    ["Enabled"] = false,
+	    ["AutoDetect"] = false,
+	    ["Type"] = "Recalculator",
+	},
+    ["Visuals"] = {
+        ["Ambient"] = {
+            ["Enabled"] = false,
+            ["Color"] = Color3.fromRGB(4, 0, 255),
+        },
+        ["OutDoor Ambient"] = {
+            ["Enabled"] = false,
+            ["Color"] = Color3.fromRGB(4, 0, 255)
+        },
+        ["Fog Modifications"] = {
+            ["Enabled"] = false,
+            ["Color"] = Color3.fromRGB(4, 0, 255),
+            ["Start"] = 15,
+            ["End"] = 100 
+        },
+        ["ColorCorrection"] = {
+            ["Enabled"] = false,
+            ["Brightness"] = 0,
+            ["Saturation"] = 5,
+            ["Contrast"] = 2,
+        },
+    },
+}
+getgenv().DistancesMid = 50
+getgenv().DistancesClose = 10
+getgenv().AimSpeed = 1
+getgenv().CAMPREDICTION = 0.185
+getgenv().CAMJUMPPREDICTION = 0.1
+getgenv().HorizontalSmoothness = 1
+getgenv().VerticallSmoothness = 0.5
+getgenv().ShakeX = 0
+getgenv().ShakeY = 0
+getgenv().ShakeZ = 0
+getgenv().PREDICTION = 0.185
+getgenv().JUMPPREDICTION = 0.1
+getgenv().SelectedPart = "HumanoidRootPart" --// LowerTorso, UpperTorso, Head
+getgenv().Prediction = "Normal"
+getgenv().AutoPredType = "Normal"
+getgenv().Resolver = false
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+
+
+function SendNotification(text)
+    Notification:Notify(
+        {Title = "glxck.cc", Description = "GuessScript Sucking - "..text},
+        {OutlineColor = Color3.fromRGB(117, 14, 7),Time = 3, Type = "image"},
+        {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(117, 14, 7)}
+    )
+end
+function calculateVelocity(initialPos, finalPos, timeInterval)
+    local displacement = finalPos - initialPos
+    local velocity = displacement / timeInterval
+    return velocity
+    end
+    game:GetService('RunService').RenderStepped:connect(function(deltaTime)
+    if getgenv().Resolver == true and enabled then 
+        local character = Plr.Character[getgenv().SelectedPart]
+        local lastPosition = character.Position
+            task.wait()
+        local currentPosition = character.Position
+        local velocity = calculateVelocity(lastPosition, currentPosition, deltaTime)
+        character.AssemblyLinearVelocity = velocity
+        character.Velocity = velocity
+            lastPosition = currentPosition
+        end
+    end)
+
+--// Change Prediction,  AutoPrediction Must Be Off
+    local lplr = game.Players.LocalPlayer
+    local AnchorCount = 0
+    local MaxAnchor = 50
+    local CC = game:GetService"Workspace".CurrentCamera
+    local Plr;
+    local enabled = false
+    local mouse = game.Players.LocalPlayer:GetMouse()
+    local placemarker = Instance.new("Part", game.Workspace)
+    function makemarker(Parent, Adornee, Color, Size, Size2)
+        local e = Instance.new("BillboardGui", Parent)
+        e.Name = "PP"
+        e.Adornee = Adornee
+        e.Size = UDim2.new(Size, Size2, Size, Size2)
+        e.AlwaysOnTop = getgenv().Settings.FearLas.DOT
+        local a = Instance.new("Frame", e)
+        if getgenv().Settings.FearLas.DOT == true then
+        a.Size = UDim2.new(1, 1, 1, 1)
+        else
+        a.Size = UDim2.new(0, 0, 0, 0)
+        end
+        if getgenv().Settings.FearLas.DOT == true then
+        a.Transparency = 0
+        a.BackgroundTransparency = 0
+        else
+        a.Transparency = 1
+        a.BackgroundTransparency = 1
+        end
+        a.BackgroundColor3 = Color
+        local g = Instance.new("UICorner", a)
+        if getgenv().Settings.FearLas.DOT == false then
+        g.CornerRadius = UDim.new(1, 1)
+        else
+        g.CornerRadius = UDim.new(1, 1) 
+        end
+        return(e)
+    end
+    local data = game.Players:GetPlayers()
+    function noob(player)
+        local character
+        repeat wait() until player.Character
+        local handler = makemarker(guimain, player.Character:WaitForChild(SelectedPart), Color3.fromRGB(244, 0, 0), 0.3, 3)
+        handler.Name = player.Name
+        player.CharacterAdded:connect(function(Char) handler.Adornee = Char:WaitForChild(SelectedPart) end)
+ 
+ 
+        spawn(function()
+            while wait() do
+                if player.Character then
+                end
+            end
+        end)
+    end
+ 
+    for i = 1, #data do
+        if data[i] ~= game.Players.LocalPlayer then
+            noob(data[i])
+        end
+    end
+ 
+    game.Players.PlayerAdded:connect(function(Player)
+        noob(Player)
+    end)
+ 
+    spawn(function()
+        placemarker.Anchored = true
+        placemarker.CanCollide = false
+        if getgenv().Settings.FearLas.DOT == true then
+        placemarker.Size = V3(0, 0, 0)
+        else
+        placemarker.Size = V3(0, 0, 0)
+        end
+        placemarker.Transparency = 0.75
+        if getgenv().Settings.FearLas.DOT then
+        makemarker(placemarker, placemarker, Color3.fromRGB(0,0,139), 1, 0)
+        end
+    end)
+ local Tool = Instance.new("Tool")
+Tool.RequiresHandle = false
+Tool.Name = "Lock Tool"
+Tool.Parent = game.Players.LocalPlayer.Backpack
+local player = game.Players.LocalPlayer
+local function connectCharacterAdded()
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+connectCharacterAdded()
+player.CharacterRemoving:Connect(function()
+Tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+function hitsound()
+    local Hit = Instance.new("Sound")
+    Hit.Parent = game.SoundService
+    Hit.SoundId = getcustomasset(getgenv().Settings.FearLas.OnHit.Hitsound.Sound)
+    Hit.Volume = getgenv().Settings.FearLas.OnHit.Hitsound.Volume
+    Hit.Looped = false
+    Hit:Play()
+    Hit.Ended:Connect(function()                                         Hit:Destroy()
+        end)
+end
+
+Tool.Activated:Connect(function()
+if getgenv().Settings.FearLas.Enabled or getgenv().Settings.FearLas.Camera.Enabled then
+            if enabled == true then
+                enabled = false
+                    Plr = LockToPlayer()
+                if getgenv().Settings.FearLas.NOTIF == true then 
+ SendNotification("Unlocked")
+            end
+            else
+                Plr = LockToPlayer()
+                TargetPlayer = tostring(Plr)
+                enabled = true
+local oldHealt = game.Players[TargetPlayer].Character.Humanoid.Health
+                        if getgenv().Settings.FearLas.OnHit.Hitsound.Enabled and Plr ~= nil then
+
+                             game.Players[TargetPlayer].Character.Humanoid.HealthChanged:Connect(function(neHealth)                            
+if neHealth < oldHealt then
+hitsound()
+elseif neHealth > oldHealt then
+print("nil")
+elseif game.Players[TargetPlayer].Character.Humanoid.Health < 0 then
+print("nil")
+end
+oldHealt = neHealth
+end)
+end                                      
+              
+if getgenv().Settings.FearLas.OnHit.Hitchams.Enabled then
+   
+        if Plr ~= nil then  game.Players[TargetPlayer].Character.Humanoid.HealthChanged:Connect(function(neHealth)
+        local Clone = game.Players[TargetPlayer].Character:Clone()
+        if neHealth > oldHealt then
+            Clone:Destroy()
+        end
+        if game.Players[TargetPlayer].Character.Humanoid.Health < 0 then
+            Clone:Destroy()
+        end
+        if neHealth < oldHealt then
+            -- Main Hit-Chams --
+            game.Players[TargetPlayer].Character.Archivable = true
+            for _, Obj in next, Clone:GetDescendants() do
+                if Obj.Name == "HumanoidRootPart" or Obj:IsA("Humanoid") or Obj:IsA("LocalScript") or Obj:IsA("Script") or Obj:IsA("Decal") then
+                    Obj:Destroy()
+                elseif Obj:IsA("BasePart") or Obj:IsA("Meshpart") or Obj:IsA("Part") then
+                    if Obj.Transparency == 1 then
+                        Obj:Destroy()
+                    else
+                        Obj.CanCollide = false
+                        Obj.Anchored = true
+                        Obj.Material = getgenv().Settings.FearLas.OnHit.Hitchams.Material
+                        Obj.Color = getgenv().Settings.FearLas.OnHit.Hitchams.Color
+                        Obj.Transparency = getgenv().Settings.FearLas.OnHit.Hitchams.Transparency
+                        Obj.Size = Obj.Size + V3(0.05, 0.05, 0.05)
+                    end
+                end
+           
+            end
+            Clone.Parent = game.Workspace
+            local start = tick()
+            local connection
+            connection = game:GetService("RunService").Heartbeat:Connect(function()
+                if tick() - start >= 3 then
+                    connection:Disconnect()
+                    Clone:Destroy()
+                end
+            end)
+        end
+
+            oldHealt = neHealth
+
+    end)
+    end
+end
+                if getgenv().Settings.FearLas.NOTIF == true then
+SendNotification("Target: "..Plr.Character.Humanoid.DisplayName)
+                end
+            end
+   else
+  SendNotification("Cam/Target not enabled!")
+        end
+    end)
+ 
+local TargetStats = Instance.new("ScreenGui")
+local Background = Instance.new("Frame")
+local Picture = Instance.new("ImageLabel")
+local Top = Instance.new("Frame")
+local UIGradient = Instance.new("UIGradient")
+local UIGradient_2 = Instance.new("UIGradient")
+local HealthBarBackground = Instance.new("Frame")
+local UIGradient_3 = Instance.new("UIGradient")
+local HealthBar = Instance.new("Frame")
+local UIGradient_4 = Instance.new("UIGradient")
+local NameOfTarget = Instance.new("TextLabel")
+
+spawn(function()
+TargetStats.Name = "TargetStats"
+TargetStats.Parent = game.CoreGui
+TargetStats.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Background.Name = "Background"
+Background.Parent = TargetStats
+Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background.BorderSizePixel = 0
+Background.Position = UDim2.new(0.388957828, 0, 0.700122297, 0)
+Background.Size = UDim2.new(0, 358, 0, 71)
+Background.Visible = false
+
+Picture.Name = "Picture"
+Picture.Parent = Background
+Picture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Picture.BorderSizePixel = 0
+Picture.Position = UDim2.new(0.0279329624, 0, 0.0704225376, 0)
+Picture.Size = UDim2.new(0, 59, 0, 59)
+Picture.Transparency = 1
+Picture.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+
+Top.Name = "Top"
+Top.Parent = Background
+Top.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Top.BorderSizePixel = 0
+Top.Position = UDim2.new(0, 0, -0.101449274, 0)
+Top.Size = UDim2.new(0, 358, 0, 7)
+
+UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(115,0,0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(155,40,0))}
+UIGradient.Rotation = 90
+UIGradient.Parent = Top
+
+UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(52, 52, 52)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 0, 0))}
+UIGradient_2.Rotation = 90
+UIGradient_2.Parent = Background
+
+HealthBarBackground.Name = "HealthBarBackground"
+HealthBarBackground.Parent = Background
+HealthBarBackground.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HealthBarBackground.BorderSizePixel = 0
+HealthBarBackground.Position = UDim2.new(0.215083793, 0, 0.348234326, 0)
+HealthBarBackground.Size = UDim2.new(0, 270, 0, 19)
+HealthBarBackground.Transparency = 1
+
+UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(58, 58, 58)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 30, 30))}
+UIGradient_3.Rotation = 90
+UIGradient_3.Parent = HealthBarBackground
+
+HealthBar.Name = "HealthBar"
+HealthBar.Parent = HealthBarBackground
+HealthBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HealthBar.BorderSizePixel = 0
+HealthBar.Position = UDim2.new(-0.00336122862, 0, 0.164894029, 0)
+HealthBar.Size = UDim2.new(0, 130, 0, 19)
+
+UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(184, 159, 227)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(102, 88, 156))}
+UIGradient_4.Rotation = 90
+UIGradient_4.Parent = HealthBar
+
+NameOfTarget.Name = "NameOfTarget"
+NameOfTarget.Parent = Background
+NameOfTarget.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NameOfTarget.BackgroundTransparency = 1.000
+NameOfTarget.Position = UDim2.new(0.220670387, 0, 0.0704225376, 0)
+NameOfTarget.Size = UDim2.new(0, 268, 0, 19)
+NameOfTarget.Font = Enum.Font.Code
+NameOfTarget.TextColor3 = Color3.fromRGB(255, 255, 255)
+NameOfTarget.TextScaled = true
+NameOfTarget.TextSize = 14.000
+NameOfTarget.TextStrokeTransparency = 0.000
+NameOfTarget.TextWrapped = true
+end)
+
+local IsAlive = function(GetPlayer)
+    return GetPlayer and GetPlayer.Character and GetPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil and GetPlayer.Character:FindFirstChild("Humanoid") ~= nil and GetPlayer.Character:FindFirstChild("Head") ~= nil and true or false
+end
+
+spawn(function()
+    while wait() do
+        if getgenv().Settings.FearLas.TargetStats and getgenv().Settings.FearLas.Enabled and enabled then
+            if Plr and IsAlive(Plr) then
+                Background.Visible = true
+                NameOfTarget.Text = tostring(Plr.Character.Humanoid.DisplayName).." ["..tostring(Plr.Name).."]"
+                Picture.Image  = "rbxthumb://type=AvatarHeadShot&id=" ..Plr.UserId.. "&w=420&h=420"
+                HealthBar:TweenSize(UDim2.new(Plr.Character.Humanoid.Health / Plr.Character.Humanoid.MaxHealth, 0, 1, 0), "In", "Linear", 0.25)
+                spawn(function()
+                    if getgenv().Settings.FearLas.TargetStats == false then
+                        Background.Visible = false
+                    end
+                end)
+            end
+        else
+            Background.Visible = false
+        end
+    end
+end)
+    function LockToPlayer()
+        local closestPlayer
+        local shortestDistance = getgenv().Settings.FearLas.FOV
+ 
+        for i, v in pairs(game.Players:GetPlayers()) do
+            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
+                local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+                local magnitude = (V2(pos.X, pos.Y) - V2(mouse.X, mouse.Y)).magnitude
+                if magnitude < shortestDistance then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            end
+        end
+        return closestPlayer
+    end
+ 
+local Stats = game:GetService("Stats")
+
+local Piiing = Stats:WaitForChild("Network"):WaitForChild("ServerStatsItem"):WaitForChild("Data Ping")
+local function Predict(Velocity)
+    return V3(Velocity.X,math.clamp(Velocity.Y*0.5,-5,10),Velocity.Z)
+end
+
+local function GetLockPrediction(Part)
+    return Part.CFrame + (Predict(Part.Velocity) * getgenv().PREDICTION)
+end
+local function GetCamPrediction(Part)
+    return Part.CFrame + Predict(Part.Velocity) * (getgenv().CAMPREDICTION)
+end
+
+    local pingvalue = nil;
+    local split = nil;
+    local ping = nil;
+local LocalHL = Instance.new("Highlight") 
+    game:GetService"RunService".Stepped:connect(function()
+        if enabled and getgenv(). Settings.FearLas.Enabled and Plr.Character ~= nil and Plr.Character:FindFirstChild("HumanoidRootPart") or enabled and getgenv(). Settings.FearLas.Camera.Enabled and Plr.Character ~= nil and Plr.Character:FindFirstChild("HumanoidRootPart") then
+if getgenv().Prediction == "Normal" then
+            placemarker.CFrame = CFrame.new(GetLockPrediction(Plr.Character[getgenv().SelectedPart]).Position)         
+elseif getgenv().Prediction == "Yun" then
+            placemarker.CFrame = CFrame.new(Plr.Character[getgenv().SelectedPart].Position+V3(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().PREDICTION/10,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().JUMPPREDICTION/10,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().PREDICTION/10))
+end
+
+LocalHL.Parent = Plr.Character
+LocalHL.FillTransparency = 0.2
+LocalHL.FillColor = Color3.fromRGB(115,0,0)
+LocalHL.OutlineColor = Color3.fromRGB(255,255,255)
+
+        else
+            placemarker.CFrame = CFrame.new(0, 9999, 0)
+    
+          LocalHL.Parent = nil
+        
+        end
+pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+split = string.split(pingvalue,'(')
+ping = tonumber(split[1])
+
+if getgenv().Settings.FearLas.AdvancedAutoPred == true and enabled then
+    getgenv().CAMJUMPPREDICTION = 0.05
+    if ping > 300 then
+        getgenv().CAMPREDICTION = 0.434
+    elseif ping > 290 then
+        getgenv().CAMPREDICTION = 0.422
+    elseif ping > 280 then
+        getgenv().CAMPREDICTION = 0.44
+    elseif ping > 270 then
+        getgenv().CAMPREDICTION = 0.4385
+    elseif ping > 260 then
+        getgenv().CAMPREDICTION = 0.4158
+    elseif ping > 250 then
+        getgenv().CAMPREDICTION = 0.3148
+    elseif ping > 240 then
+        getgenv().CAMPREDICTION = 0.34
+    elseif ping > 230 then
+        getgenv().CAMPREDICTION = 0.33
+    elseif ping > 220 then
+        getgenv().CAMPREDICTION = 0.30
+    elseif ping > 210 then
+        getgenv().CAMPREDICTION = 0.295
+    elseif ping > 200 then
+        getgenv().CAMPREDICTION = 0.2915
+    elseif ping > 190 then
+        getgenv().CAMPREDICTION = 0.2911
+    elseif ping > 180 then
+        getgenv().CAMPREDICTION = 0.28291198328
+    elseif ping > 180 then
+        getgenv().CAMPREDICTION = 0.25291198328
+    elseif ping > 170 then
+        getgenv().CAMPREDICTION = 0.28
+    elseif ping > 160 then
+        getgenv().CAMPREDICTION = 0.2754
+    elseif ping  >150 then
+        getgenv().CAMPREDICTION = 0.271
+    elseif ping  >140 then
+        getgenv().CAMPREDICTION = 0.25
+       elseif ping > 130 then
+        getgenv().CAMPREDICTION = 0.12057
+    elseif ping > 120 then
+        getgenv().CAMPREDICTION = 0.1966
+    elseif ping > 110 then
+        getgenv().CAMPREDICTION = 0.18642271
+    elseif ping > 100 then
+        getgenv().CAMPREDICTION = 0.18533
+    elseif ping > 90 then
+        getgenv().CAMPREDICTION = 0.1749573
+    elseif ping > 80 then
+        getgenv().CAMPREDICTION = 0.1745
+    elseif ping > 70 then
+        getgenv().CAMPREDICTION = 0.1642
+    elseif ping > 50 then
+        getgenv().CAMPREDICTION = 0.14267
+    elseif ping > 40 then
+        getgenv().CAMPREDICTION = 0.142
+    elseif ping > 30 then
+        getgenv().CAMPREDICTION = 0.1312
+   elseif ping > 20 then
+        getgenv().CAMPREDICTION = 0.1312
+   elseif ping > 10 then
+        getgenv().CAMPREDICTION = 0.1287
+   end
+end
+if getgenv().Settings.FearLas.AUTOPRED == true then
+if getgenv().AutoPredType == "Normal" then
+if getgenv().Prediction == "Normal" then
+getgenv().JUMPPREDICTION = tostring(ping/1500)
+if ping <200 then
+        getgenv().PREDICTION = 0.2198343243234332
+    elseif ping < 170 then
+        getgenv().PREDICTION = 0.2165713
+    elseif ping < 160 then
+        getgenv().PREDICTION = 0.16242
+    elseif ping < 150 then
+        getgenv().PREDICTION = 0.158041
+    elseif ping < 140 then
+        getgenv().PREDICTION = 0.155313
+    elseif ping < 130 then
+        getgenv().PREDICTION = 0.152692
+    elseif ping < 120 then
+        getgenv().PREDICTION = 0.153017
+    elseif ping < 110 then
+        getgenv().PREDICTION = 0.15165
+    elseif ping < 100 then
+  getgenv().PREDICTION = 0.1483987
+ elseif ping < 80 then
+  getgenv().PREDICTION = 0.1451340
+ elseif ping < 70 then
+  getgenv().PREDICTION = 0.143633
+ elseif ping < 65 then
+  getgenv().PREDICTION = 0.1374236
+ elseif ping < 50 then
+  getgenv().PREDICTION = 0.13644
+ elseif ping < 30 then
+  getgenv().PREDICTION = 0.12452476
+end
+end
+elseif getgenv().AutoPredType == "Beta AutoPred" then
+    if getgenv().Prediction == "Normal" then
+    getgenv().JUMPPREDICTION = tostring(ping/1500)
+    if ping <200 then
+        getgenv().PREDICTION = 0.1973432432343325
+    elseif ping < 150 then
+        getgenv().PREDICTION = 0.1922
+    elseif ping < 90 then
+        getgenv().PREDICTION = 0.176
+    elseif ping < 80 then
+        getgenv().PREDICTION = 0.169
+    elseif ping < 70 then
+        getgenv().PREDICTION = 0.1355
+    elseif ping < 50 then
+        getgenv().PREDICTION = 0.125
+    elseif ping < 40 then
+        getgenv().PREDICTION = 0.12
+    elseif ping < 30 then
+        getgenv().PREDICTION = 0.12
+    end
+end
+elseif getgenv().AutoPredType == "Old Azure" then
+if getgenv().Prediction == "Normal" then
+ getgenv().JUMPPREDICTION = tostring(ping/1500)
+   if ping < 360 then
+  getgenv().PREDICTION = 0.16537
+  elseif ping < 270 then
+     getgenv().PREDICTION = 0.195566
+     elseif ping < 260 then
+         getgenv().PREDICTION = 0.175566
+      elseif ping < 250 then
+         getgenv().PREDICTION = 0.1651
+              elseif ping < 240 then
+           getgenv().PREDICTION = 0.16780
+                elseif ping < 230 then
+                    getgenv().PREDICTION = 0.15692
+                elseif ping < 220 then
+                    getgenv().PREDICTION = 0.165566
+                elseif ping < 210 then
+                    getgenv().PREDICTION = 0.16780
+                elseif ping < 200 then
+                    getgenv().PREDICTION = 0.165566
+                elseif ping < 190 then
+                    getgenv().PREDICTION = 0.166547
+                elseif ping < 180 then
+                    getgenv().PREDICTION = 0.19284
+                elseif ping < 170 then
+                    getgenv().PREDICTION = 0.1923111 
+                elseif ping < 160 then
+                    getgenv().PREDICTION = 0.16
+                elseif ping < 150 then
+                    getgenv().PREDICTION = 0.15
+                elseif ping < 140 then
+                    getgenv().PREDICTION = 0.1223333
+                elseif ping < 130 then
+                    getgenv().PREDICTION = 0.156692
+                elseif ping < 120 then
+                    getgenv().PREDICTION = 0.143765
+                elseif ping < 110 then
+                    getgenv().PREDICTION = 0.1455
+                elseif ping < 100 then
+                    getgenv().PREDICTION = 0.130340
+                elseif ping < 90 then
+                    getgenv().PREDICTION = 0.136
+                elseif ping < 80 then
+                    getgenv().PREDICTION = 0.1347
+                elseif ping < 70 then
+                    getgenv().PREDICTION = 0.119
+                elseif ping < 60 then
+                    getgenv().PREDICTION = 0.12731
+                elseif ping < 50 then
+                    getgenv().PREDICTION = 0.127668
+                elseif ping < 40 then
+                    getgenv().PREDICTION = 0.125
+                elseif ping < 30 then
+                    getgenv().PREDICTION = 0.11
+                elseif ping < 20 then
+                    getgenv().PREDICTION = 0.12588
+                elseif ping < 10 then
+                    getgenv().PREDICTION = 0.09
+                end
+end
+elseif getgenv().AutoPredType == "Fake Celex" then
+    if getgenv().Prediction == "Normal" then
+        getgenv().JUMPPREDICTION = tostring(ping/1500)
+                if ping > 190 then
+                    getgenv().PREDICTION = 0.206547
+                elseif ping > 180 then
+                    getgenv().PREDICTION = 0.19284
+                elseif ping > 170 then
+                    getgenv().PREDICTION = 0.1923111
+                elseif ping > 160 then
+                    getgenv().PREDICTION = 0.1823111
+                elseif ping > 150 then
+                    getgenv().PREDICTION = 0.171
+                elseif ping > 140 then
+                    getgenv().PREDICTION = 0.165773
+                elseif ping > 130 then
+                    getgenv().PREDICTION = 0.14333322
+                elseif ping > 120 then
+                    getgenv().PREDICTION = 0.143765
+                elseif ping > 110 then
+                    getgenv().PREDICTION = 0.1455
+                elseif ping > 100 then
+                    getgenv().PREDICTION = 0.143987
+                elseif ping > 90 then
+                    getgenv().PREDICTION = 0.14215
+                elseif ping > 80 then
+                    getgenv().PREDICTION = 0.141340
+                elseif ping > 70 then
+                    getgenv().PREDICTION = 0.13633
+                elseif ping > 60 then
+                    getgenv().PREDICTION = 0.12731
+                elseif ping > 50 then
+                    getgenv().PREDICTION = 0.127668
+                elseif ping > 40 then
+                    getgenv().PREDICTION = 0.125
+                elseif ping > 30 then
+                    getgenv().PREDICTION = 0.1261
+                elseif ping > 20 then
+                    getgenv().PREDICTION = 0.12588
+                elseif ping > 10 then
+                    getgenv().PREDICTION = 0.09
+                end
+    end
+
+end
+end
+
+if getgenv().Settings.FearLas.Resolver.Enabled then
+if getgenv().Settings.FearLas.Resolver.Type == "Delta Time" then
+print("wsg")
+end
+if getgenv().Settings.FearLas.Resolver.Type == "Recalculator" then
+print("wsg")
+end
+if getgenv().Settings.FearLas.Resolver.Type == "No Y Velocity" then
+print("wsg")
+end
+end
+    end)
+
+
+game:GetService"RunService".Stepped:connect(function()
+    if enabled and getgenv().Settings.FearLas.Camera.Enabled then
+        if Plr ~= nil then
+            local shakeOffset = V3(
+                math.random(-getgenv().ShakeX, getgenv().ShakeX),
+                math.random(-getgenv().ShakeY, getgenv().ShakeY),
+                math.random(-getgenv().ShakeZ, getgenv().ShakeZ)
+            ) * 0.1
+local HorizontalLookPosition = CFrame.new(CC.CFrame.p, GetCamPrediction(Plr.Character[getgenv().SelectedPart]).Position+shakeOffset)
+      CC.CFrame = CC.CFrame:Lerp(HorizontalLookPosition, getgenv().HorizontalSmoothness)
+    end
+end
+end)
+
+    local mt = getrawmetatable(game)
+    local old = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(...)
+        local args = {...}
+        local vap = {"UpdateMousePos", "GetMousePos", "MousePos", "MOUSE", "MousePosUpdate"}
+        if enabled and getnamecallmethod() == "FireServer" and table.find(vap, args[2]) and getgenv().Settings.FearLas.Enabled and Plr.Character ~= nil and getgenv().Settings.FearLas.LOCKTYPE == "Namecall" then
+            if getgenv().Prediction == "Normal" then
+            args[3] = GetLockPrediction(Plr.Character[getgenv().SelectedPart]).Position
+            elseif getgenv().Prediction == "Yun" then
+            args[3] = Plr.Character[getgenv().SelectedPart].Position+V3(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().PREDICTION/10,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().JUMPPREDICTION/10,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().PREDICTION/10)
+            else
+ 
+            args[3] = Plr.Character[SelectedPart].Position
+ 
+            end
+ 
+            return old(unpack(args))
+        end
+        return old(...)
+    end)
+
+local Hooks = {}
+local Client = game.Players.LocalPlayer
+
+Hooks[1] = hookmetamethod(Client:GetMouse(), "__index", newcclosure(function(self, index)
+    if index == "Hit" and getgenv().Settings.FearLas.LOCKTYPE == "Index" and enabled and Plr.Character ~= nil and getgenv().Settings.FearLas.Enabled then
+            local position = CFrame.new(GetLockPrediction(Plr.Character[getgenv().SelectedPart]).Position)
+            return position
+        
+    end
+    return Hooks[1](self, index)
+end))
+
+getgenv().CFrameDesync = {
+           Enabled = false,
+           AnglesEnabled = false,
+           Type = "Random",
+           Visualize = false,
+           VisualizeColor = Color3.fromRGB(255,255,255),
+           Random = {
+               X = 5,
+               Y = 5,
+               Z = 5,
+               AnglesX = 5,
+               AnglesY = 5,
+               AnglesZ = 5,
+               },
+           Custom = {
+               X = 5,
+               Y = 5,
+               Z = 5,
+               AnglesX = 5,
+               AnglesY = 5,
+               AnglesZ = 5,
+               },
+     TargetStrafe = {
+               Speed = 10,
+               Height = 10,
+               Distance = 7,
+               },
+}
+
+local straight = {
+         Visuals = {},
+         Desync = {},
+         Hooks = {},
+         Connections = {}
+}
+
+
+
+local RunService = game:GetService("RunService")
+
+
+task.spawn(function()
+straight.Visuals["R6Dummy"] = game:GetObjects("rbxassetid://9474737816")[1]; straight.Visuals["R6Dummy"].Head.Face:Destroy(); for i, v in pairs(straight.Visuals["R6Dummy"]:GetChildren()) do v.Transparency = v.Name == "HumanoidRootPart" and 1 or 0.70; v.Material = "Neon"; v.Color = Color3.fromRGB(255, 255, 255); v.CanCollide = false; v.Anchored = false end
+end)
+
+local Utility = {}
+
+do --// Utility Functions
+    function Utility:Connection(connectionType, connectionCallback)
+        local connection = connectionType:Connect(connectionCallback)
+        straight.Connections[#straight.Connections + 1] = connection
+        return connection
+    end
+end
+
+Utility:Connection(RunService.PostSimulation, function()
+if getgenv().CFrameDesync.AnglesEnabled or getgenv().CFrameDesync.Enabled then
+        straight.Desync[1] = lplr.Character.HumanoidRootPart.CFrame
+        local cframe = lplr.Character.HumanoidRootPart.CFrame
+        if getgenv().CFrameDesync.Enabled then
+            if getgenv().CFrameDesync.Type == "Random" then
+                cframe = cframe * CFrame.new(math.random(-getgenv().CFrameDesync.Random.X, getgenv().CFrameDesync.Random.X), math.random(-getgenv().CFrameDesync.Random.Y, getgenv().CFrameDesync.Random.Y), math.random(-getgenv().CFrameDesync.Random.Z, getgenv().CFrameDesync.Random.Z))
+            elseif getgenv().CFrameDesync.Type == "Custom" then
+                cframe = cframe * CFrame.new(getgenv().CFrameDesync.Custom.X, getgenv().CFrameDesync.Custom.Y, getgenv().CFrameDesync.Custom.Z)
+            elseif getgenv().CFrameDesync.Type == "Mouse" then
+                cframe = CFrame.new(lplr:GetMouse().Hit.Position)
+            elseif getgenv().CFrameDesync.Type == "Target Strafe" then
+            if enabled and Plr ~= nil then
+                local currentTime = tick() 
+                cframe = CFrame.new(Plr.Character[getgenv().SelectedPart].Position) * CFrame.Angles(0, 2 * math.pi * currentTime * getgenv().CFrameDesync.TargetStrafe.Speed % (2 * math.pi), 0) * CFrame.new(0, getgenv().CFrameDesync.TargetStrafe.Height, getgenv().CFrameDesync.TargetStrafe.Distance)
+            elseif getgenv.CFrameDesync.Type == "Local Strafe" then
+                local currentTime = tick() 
+                cframe = CFrame.new(lplr.Character.HumanoidRootPart.Position) * CFrame.Angles(0, 2 * math.pi * currentTime * getgenv.CFrameDesync.TargetStrafe.Speed % (2 * math.pi), 0) * CFrame.new(0, getgenv.CFrameDesync.TargetStrafe.Height, getgenv().CFrameDesync.TargetStrafe.Distance)
+                end
+        end
+
+        if getgenv().CFrameDesync.Visualize then
+            straight.Visuals["R6Dummy"].Parent = workspace
+            straight.Visuals["R6Dummy"].HumanoidRootPart.Velocity = Vector3.new()
+            straight.Visuals["R6Dummy"]:SetPrimaryPartCFrame(cframe)
+            for i, v in pairs(straight.Visuals["R6Dummy"]:GetChildren()) do v.Transparency = v.Name == "HumanoidRootPart" and 1 or 0.70; v.Material = "Neon"; v.Color = getgenv().CFrameDesync.VisualizeColor; v.CanCollide = false; v.Anchored = false end
+        else
+            straight.Visuals["R6Dummy"].Parent = nil
+        end
+
+        if getgenv().CFrameDesync.AnglesEnabled then
+            if getgenv().CFrameDesync.Type == "Random" then
+                cframe = cframe * CFrame.Angles(math.rad(math.random(getgenv().CFrameDesync.Random.AnglesX)), math.rad(math.random(getgenv().CFrameDesync.Random.AnglesY)), math.rad(math.random(getgenv().CFrameDesync.Random.AnglesZ)))
+            elseif getgenv().CFrameDesync.Type == "Custom" then
+                cframe = cframe * CFrame.Angles(math.rad(getgenv().CFrameDesync.Custom.AnglesX), math.rad(getgenv().CFrameDesync.Custom.AnglesY), math.rad(getgenv().CFrameDesync.Custom.AnglesZ))
+            end
+        end
+        lplr.Character.HumanoidRootPart.CFrame = cframe
+        RunService.RenderStepped:Wait()
+        lplr.Character.HumanoidRootPart.CFrame = straight.Desync[1]
+    else
+        if straight.Visuals["R6Dummy"].Parent ~= nil then
+            straight.Visuals["R6Dummy"].Parent = nil
+        end
+    end
+end
+end)
+
+--// Hooks
+local MainHookingFunctionsTick = tick()
+--
+straight.Hooks[1] = hookmetamethod(game, "__index", newcclosure(function(self, key)
+    if not checkcaller() then
+        if key == "CFrame" and straight.Desync[1] and (getgenv().CFrameDesync.AnglesEnabled or getgenv().CFrameDesync.Enabled) and lplr.Character and lplr.Character:FindFirstChild("HumanoidRootPart") and lplr.Character:FindFirstChild("Humanoid") and lplr.Character:FindFirstChild("Humanoid").Health > 0 then
+            if self == lplr.Character.HumanoidRootPart then
+                return straight.Desync[1] or CFrame.new()
+            elseif self == lplr.Character.Head then
+                return straight.Desync[1] and straight.Desync[1] + Vector3.new(0, lplr.Character.HumanoidRootPart.Size / 2 + 0.5, 0) or CFrame.new()
+            end
+        end
+    end
+    return straight.Hooks[1](self, key)
+end))
+
+ for _, key in next, getgc(true) do 
+        local function updateKey(instanceType)
+            if pcall(function() return rawget(key, instanceType) end) and typeof(rawget(key, instanceType)) == 'table' and (rawget(key, instanceType))[1] == 'kick' then
+                key.tvk = {
+                    'kick',
+                    function() 
+                        return game.Workspace:WaitForChild('')
+                    end
+                }
+            end
+        end
+        updateKey('indexInstance')
+        updateKey('namecallInstance')
+    end
+do
+
+makefolder("glxck.cc")
+
+local PuppyModule = {
+    Instance = {}
+}
+
+local Window = libary:new({name = "glxck.cc || gui 🤑", accent = Color3.fromRGB(244, 0, 0), textsize = 13})
+local AimingTab = Window:page({name = "Camlock/Dot 💸"})
+local MiscTab = Window:page({name = "Misc 💰"})
+
+local SAimSection = AimingTab:section({name = "Camlock", side = "left",size = 320})
+
+local AAMainSection = RageTab:section({name = "Dot Lock", side = "left", size = 200})
+local AASettings = RageTab:section({name = "Settings", side = "right", size = 200})
+
+local MiscMoveSettings = MiscTab:section({name = "Movement Cheats",side = "left", size = 200})
+local MiscToolSettings = MiscTab:section({name = "Tool Cheats",side = "left", size = 50})
+local MiscCharSettings = MiscTab:section({name = "Character Cheats",side = "left", size = 50})
+local MiscNorSettings = MiscTab:section({name = "Normal Cheats",side = "left", size = 100})
+
+local ConfigSection = MiscTab:section({name = "Config",side = "right", size = 250})
+local ConfigLoader = ConfigSection:configloader({folder = "glxck.cc"})
+
+SAimSection:toggle({name = "CamLock Enable", def = false, callback = function(Boolean)
+	getgenv().Settings.FearLas.Camera.Enabled = bool
+	end)
+bleud:Set(false)
+end})
+
+SAimSection:toggle({name = "Hit Airshots", def = false, callback = function(Boolean)
+    getgenv().Settings["FearLas"]["AIRSHOT"] = Boolean
+end})
+
+SAimSection:toggle({name = "Auto Air", def = false, callback = function(Boolean)
+        getgenv().Settings["Misc"]["AutoAir"]["Enabled"] = Boolean
+end})
+
+-- Aimbot Section --
+local AimbotSection = AimingTab:section({name = "Dot lock", side = "right",size = 113})
+AimbotSection:toggle({name = "Dot Enabled", def = false, callback = function(Boolean)
+	getgenv().Settings.FearLas.Enabled = bool
+end})
+
+AimbotSection:toggle({name = "Advance Auto Prediction", def = false, callback = function(Boolean)
+    getgenv().Settings["FearLas"]["AdvancedAutoPred"] = Boolean
+end})
+
+SAimSection:toggle({name = "Auto Prediction", def = false, callback = function(Boolean)
+    getgenv().Settings["FearLas"]["AUTOPRED"] = Boolean
+end})
+
+AimbotSection:dropdown({name = "Hit Body", def = "HumanoidRootPart", max = 4, options = {"Head","UpperTorso","HumanoidRootPart"}, callback = function(part)
+		getgenv().SelectedPart = part
+end})
+
+
+-- Anti Aim Section --
+
+AAMainSection:dropdown({name = "Orbit", def = , max = 40, options = function()
+        local playerList = {}
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            table.insert(playerList, player.Name)
+        end
+        return playerList
+    end,
+    callback = function(playerName)
+        local targetPlayer = game.Players:FindFirstChild(playerName)
+        if part then
+            getgenv().SelectedPart = part
+        end
+end})
+
+local Players = game:GetService("Players")
+local Camera = game:GetService("Workspace").CurrentCamera
+
+local orbitSpeed = 1 -- Default orbit speed
+
+local function orbitAroundPlayer(player)
+    local character = player.Character
+    if character then
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        while true do
+            local position = humanoidRootPart.Position
+            local direction = (position - Camera.CFrame.Position).unit
+            local newLookAt = CFrame.new(position + direction * 10, position)
+            Camera.CFrame = Camera.CFrame:Lerp(newLookAt, orbitSpeed)
+            wait(0.03)
+        end
+    end
+end
+
+AAMainSection:toggle({
+    name = "Orbit",
+    def = false,
+    callback = function(enabled)
+        if enabled then
+            if getgenv().SelectedPlayer then
+                orbitAroundPlayer(getgenv().SelectedPlayer)
+            else
+                warn("No player selected for orbit.")
+            end
+        end
+end})
+AAMainSection:toggle({name = "Anti Aim Enabled", def = false, callback = function(Boolean)
+    PuppySettings.AntiAim.Enabled = Boolean
+end})
+
+AAMainSection:toggle({name = "Desync AA Enabled", def = false, callback = function(Boolean)
+    PuppySettings.AntiAim.Desync = Boolean
+end})
+
+AAMainSection:toggle({name = "Legit AA Enabled", def = false, callback = function(Boolean)
+    PuppySettings.AntiAim.Legit = Boolean
+end})
+
+AAMainSection:button({name = "Hitbox Destroyer", callback = function()
+ game.Players.LocalPlayer.Character.Head:BreakJoints()
+    game.Players.LocalPlayer.Character.Head.Position = Vector3.new(0,999999999999,0)
+    game.Players.LocalPlayer.Character.Parent = nil
+    game.Players.LocalPlayer.Character.HumanoidRootPart:Destroy()
+    game.Players.LocalPlayer.Character.Parent = game.workspace
+    local A = getrawmetatable(game)
+    local B = A.__index
+    setreadonly(A, false)
+ A.__index = newcclosure(function(self, key)
+  if self == game:GetService("Players").LocalPlayer.Character and key == "HumanoidRootPart" then
+   return game:GetService("Players").LocalPlayer.Character.UpperTorso
+        end
+  return B(self, key)
+    end)
+ game.Players.LocalPlayer.Character.RightUpperLeg:Destroy()
+    game.Players.LocalPlayer.Character.LeftUpperLeg:Destroy()
+end})
+
+AAMainSection:toggle({name = "BackTracking", def = false, callback = function(Boolean)
+    PuppySettings.BackTracking.Enabled = Boolean
+end})
+
+AAMainSection:toggle({name = "Auto Peak", def = false, callback = function(Boolean)
+    PuppySettings.AutoPeak.Enabled = Boolean
+end})
+
+AASettings:slider({name = "Desync Velocity", def = 500, max = 1000, min = 0, rounding = true, callback = function(Value)
+ PuppySettings.AntiAim.DesyncValues.Velocity = tonumber(Value)
+end})
+
+AASettings:slider({name = "Desync CFrame", def = 500, max = 1000, min = 0, rounding = true, callback = function(Value)
+ PuppySettings.AntiAim.DesyncValues.CFrame = tonumber(Value)
+end})
+
+AASettings:keybind({name = "Legit AA Keybind", def = Enum.KeyCode.Z, callback = function(Key)
+ PuppySettings.AntiAim.LegitAAKey = Key
+end})
+
+AASettings:keybind({name = "Auto Peak Keybind", def = Enum.KeyCode.N, callback = function(Key)
+ PuppySettings.AutoPeak.APKey = Key
+end})
+
+AAMainSection:toggle({name = "+60 FPS", def = false, callback = function(Boolean)
+    PuppySettings.AntiAim.FPSUnlocked = Boolean
+end})
+
+
+--// Misc Sections
+local TimeTick
+TimeTick = hookfunction(wait, function(JumpCooldown)
+ if JumpCooldown == 1.5 and (PuppySettings.Misc.CFrameSpeed.Bhop and PuppySettings.Misc.CFrameSpeed.Enabled) or PuppySettings.Misc.Strafe then 
+  return TimeTick()
+    end
+    return TimeTick(JumpCooldown)
+end)
+
+MiscMoveSettings:toggle({name = "CFrame Speed", def = false, callback = function(Boolean)
+ PuppySettings.Misc.CFrameSpeed.Enabled = Boolean
+end})
+
+MiscMoveSettings:toggle({name = "Bhop", def = false, callback = function(Boolean)
+ PuppySettings.Misc.CFrameSpeed.Bhop = Boolean
+end})
+
+MiscMoveSettings:keybind({name = "CFrame Keybind", def = Enum.KeyCode.V, callback = function(Key)
+ PuppySettings.Misc.CFrameSpeed.Keybind = Key
+end})
+
+MiscMoveSettings:slider({name = "CFrame Value", def = 100, max = 1000, min = 0, rounding = true, callback = function(Value)
+ PuppySettings.Misc.CFrameSpeed.Speed = tonumber(Value)/100
+end})
+
+MiscMoveSettings:toggle({name = "Strafe Jump", def = false, callback = function(Boolean)
+ PuppySettings.Misc.Strafe = Boolean
+end})
+
+MiscMoveSettings:button({name = "Fly (X)", callback = function()
+ local mouse = game.Players.LocalPlayer:GetMouse()
+ localplayer = game.Players.LocalPlayer
+ if workspace:FindFirstChild("Core") then
+  workspace.Core:Destroy()
+ end
+ local Core = Instance.new("Part")
+ Core.Name = "Core"
+ Core.Size = Vector3.new(0.05, 0.05, 0.05)
+ spawn(function()
+  Core.Parent = workspace
+  local Weld = Instance.new("Weld", Core)
+  Weld.Part0 = Core
+  Weld.Part1 = localplayer.Character.LowerTorso
+  Weld.C0 = CFrame.new(0, 0, 0)
+ end)
+ workspace:WaitForChild("Core")
+ local torso = workspace.Core
+ flying = true
+ local speed=10
+ local keys={a=false,d=false,w=false,s=false}
+ local e1
+ local e2
+ local function start()
+ local pos = Instance.new("BodyPosition",torso)
+ local gyro = Instance.new("BodyGyro",torso)
+ pos.Name="EPIXPOS"
+ pos.maxForce = Vector3.new(math.huge, math.huge, math.huge)
+ pos.position = torso.Position
+ gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+ gyro.cframe = torso.CFrame
+ repeat wait() localplayer.Character.Humanoid.PlatformStand = true
+  local new=gyro.cframe - gyro.cframe.p + pos.position
+  if not keys.w and not keys.s and not keys.a and not keys.d then
+   speed=5
+  end
+  if keys.w then
+   new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+   speed=speed+0
+  end
+  if keys.s then
+   new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+   speed=speed+0
+  end
+  if keys.d then
+   new = new * CFrame.new(speed,0,0)
+   speed=speed+0
+  end
+  if keys.a then
+   new = new * CFrame.new(-speed,0,0)
+   speed=speed+0
+  end
+  if speed>10 then
+   speed=5
+  end
+  pos.position=new.p
+  if keys.w then
+   gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(-math.rad(speed*0),0,0)
+  elseif keys.s then
+   gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(math.rad(speed*0),0,0)
+  else
+   gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+  end
+ until flying == false
+ if gyro then gyro:Destroy() end
+ if pos then pos:Destroy() end
+ flying=false
+ localplayer.Character.Humanoid.PlatformStand=false
+ speed=10
+ end
+ e1=mouse.KeyDown:connect(function(key)
+  if not torso or not torso.Parent then flying=false e1:disconnect() e2:disconnect() return end
+  if key=="w" then
+   keys.w=true
+  elseif key=="s" then
+   keys.s=true
+  elseif key=="a" then
+   keys.a=true
+  elseif key=="d" then
+   keys.d=true
+  elseif key=="x" then
+   if flying==true then
+    flying=false
+   else
+    flying=true
+    start()
+   end
+  end
+ end)
+ e2=mouse.KeyUp:connect(function(key)
+  if key=="w" then
+   keys.w=false
+  elseif key=="s" then
+   keys.s=false
+  elseif key=="a" then
+   keys.a=false
+  elseif key=="d" then
+   keys.d=false
+  end
+ end)
+ start()
+end})
+
+MiscMoveSettings:toggle({name = "Antislow", def = false, callback = function(Boolean)
+ PuppySettings.Misc.Antislow = Boolean 
+end})
+
+-- MiscToolSettings
+MiscToolSettings:button({name = "Ambience", callback = function()
+getgenv().Ambience = Boolean
+                        while getgenv().Ambience do
+                            wait()
+                            game:GetService("Lighting").Ambient = getgenv().Ambiencecolor
+                        end
+                        if getgenv().Ambience == false then
+                            game:GetService("Lighting").Ambient = Color3.fromRGB(0, 0, 0)
+                        end
+                    end
+end})
+
+-- Misc Char
+MiscCharSettings:button({name = "Nil Char", callback = function()
+ NilBody()
+end})
+
+MiscNorSettings:toggle({name = "AutoClicker", def = false, callback = function(Boolean)
+ PuppySettings.AutoClicker.Enabled = Boolean 
+end})
+
+MiscNorSettings:keybind({name = "AutoClicker Keybind", def = Enum.KeyCode.B, callback = function(Key)
+ PuppySettings.AutoClicker.Keybind = Key
+end})
+
+AimingTab:openpage()
+
+-- Init --
+
+--// Lock Normal
+getgenv().AimlockKey = "q"
+getgenv().AimRadius = 30 
+getgenv().ThirdPerson = true 
+getgenv().FirstPerson = true
+getgenv().PredictionVelocity = 11
+
+local Players, Uis, RService, SGui = game:GetService"Players", game:GetService"UserInputService", game:GetService"RunService", game:GetService"StarterGui";
+local Client, Mouse, Camera, CF, RNew, Vec3, Vec2 = Players.LocalPlayer, Players.LocalPlayer:GetMouse(), workspace.CurrentCamera, CFrame.new, Ray.new, Vector3.new, Vector2.new;
+local MousePressed, CanNotify = false, false;
+local AimlockTarget;
+local OldPre;
+
+getgenv().GetNearestTarget = function()
+    local players = {}
+    local PLAYER_HOLD  = {}
+    local DISTANCES = {}
+    for i, v in pairs(Players:GetPlayers()) do
+        if v ~= Client then
+            table.insert(players, v)
+        end
+    end
+    for i, v in pairs(players) do
+        if v.Character ~= nil then
+            local AIM = v.Character:FindFirstChild("Head")
+                local DISTANCE = (v.Character:FindFirstChild("Head").Position - game.Workspace.CurrentCamera.CFrame.p).magnitude
+                local RAY = Ray.new(game.Workspace.CurrentCamera.CFrame.p, (Mouse.Hit.p - game.Workspace.CurrentCamera.CFrame.p).unit * DISTANCE)
+                local HIT,POS = game.Workspace:FindPartOnRay(RAY, game.Workspace)
+                local DIFF = math.floor((POS - AIM.Position).magnitude)
+                PLAYER_HOLD[v.Name .. i] = {}
+                PLAYER_HOLD[v.Name .. i].dist= DISTANCE
+                PLAYER_HOLD[v.Name .. i].plr = v
+                PLAYER_HOLD[v.Name .. i].diff = DIFF
+                table.insert(DISTANCES, DIFF)
+        end
+    end
+    
+    if unpack(DISTANCES) == nil then
+        return nil
+    end
+    
+    local L_DISTANCE = math.floor(math.min(unpack(DISTANCES)))
+    if L_DISTANCE > getgenv().AimRadius then
+        return nil
+    end
+    
+    for i, v in pairs(PLAYER_HOLD) do
+        if v.diff == L_DISTANCE then
+            return v.plr
+        end
+    end
+    return nil
+end
+
+Mouse.KeyDown:Connect(function(a)
+    if not (Uis:GetFocusedTextBox()) then 
+        if a == AimlockKey and AimlockTarget == nil then
+            pcall(function()
+                if MousePressed ~= true then MousePressed = true end 
+                local Target;Target = GetNearestTarget()
+                if Target ~= nil then 
+                    AimlockTarget = Target
+                end
+            end)
+        elseif a == AimlockKey and AimlockTarget ~= nil then
+            if AimlockTarget ~= nil then AimlockTarget = nil end
+            if MousePressed ~= false then 
+                MousePressed = false 
+            end
+        end
+    end
+end)
+
+
+
+function NoSpace(Data)
+    return Data:gsub("%s+", "") or Data
+end
+
+--// Auto Peak
+local APEF = Instance.new("Folder")
+APEF.Parent = game.Workspace
+APEF.Name = "APEF"
+getgenv().oldc = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+getgenv().APE = false
+game:service('UserInputService').InputBegan:connect(function(Key, IsChat)
+ if IsChat then return end
+ if Key.KeyCode == PuppySettings.AutoPeak.APKey and PuppySettings.AutoPeak.Enabled == true then
+  if getgenv().APE == false then
+   getgenv().APE = true
+   local APEPart = Instance.new("Part")
+   APEPart.Parent = APEF
+   APEPart.Name = "backTP"
+   APEPart.Anchored = true
+   APEPart.CanCollide = false
+   APEPart.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+   APEPart.Orientation = game.Players.LocalPlayer.Character.HumanoidRootPart.Orientation
+   APEPart.Size = Vector3.new(1, 1, 1)
+   APEPart.Transparency = 0.7
+   APEPart.BrickColor = BrickColor.new("Institutional white")
+   APEPart.Material = "SmoothPlastic"
+   getgenv().oldc = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+  elseif getgenv().APE == true then
+   getgenv().APE = false
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().oldc
+   game.Workspace.APEF.backTP:Destroy()
+  end
+ end
+end)
+
+--// Esp Bones
+
+--// BackTrack
+local BTF = Instance.new("Folder")
+BTF.Parent = game.Workspace
+BTF.Name = "BTF"
+
+--//SFOV
+local SilentAimFOV = Drawing.new("Circle")
+SilentAimFOV.Thickness = 2
+
+--//Auto Clicker
+getgenv().Clicking = false
+game:service('UserInputService').InputBegan:connect(function(Key, IsChat)
+ if IsChat then return end 
+ if Key.KeyCode == PuppySettings.AutoClicker.Keybind and PuppySettings.AutoClicker.Enabled == true then
+  getgenv().Clicking = not getgenv().Clicking
+ end
+end)
+
+--// Legit AA
+getgenv().LegitAA = false
+getgenv().CFSpeed = false
+
+game:service('UserInputService').InputBegan:connect(function(Key, IsChat)
+ if IsChat then return end
+ if Key.KeyCode == PuppySettings.AntiAim.LegitAAKey and PuppySettings.AntiAim.Legit == true and PuppySettings.AntiAim.Enabled == true then
+  getgenv().LegitAA = not getgenv().LegitAA
+ end
+end)
+
+game:service('UserInputService').InputBegan:connect(function(Key, IsChat)
+ if IsChat then return end
+ if Key.KeyCode == PuppySettings.Misc.CFrameSpeed.Keybind and PuppySettings.Misc.CFrameSpeed.Enabled == true then
+  getgenv().CFSpeed = not getgenv().CFSpeed
+ end
+end)
+    
+function Find(Data)
+   getgenv().Target = nil
+    for i, v in next, Players:GetPlayers() do
+        if v.Name ~= LocalPlayer.Name and v.Name:lower():match('^'.. NoSpace(Data):lower()) then
+            getgenv().Target = v.Name
+        end
+    end
+    
+    return getgenv().Target
+end
+
+function IsNetwork(GetPlayer)
+ return GetPlayer and GetPlayer.Character and GetPlayer.Character:FindFirstChild("HumanoidRootPart") ~= nil and GetPlayer.Character:FindFirstChild("Humanoid") ~= nil and GetPlayer.Character:FindFirstChild("Head") ~= nil and true or false
+end
+
+function Knocked(GetPlayer)
+    if IsNetwork(GetPlayer) then
+        return GetPlayer.Character.BodyEffects["K.O"].Value and true or false
+    end
+    return false
+end
+
+function Grabbing(GetPlayer)
+    if IsNetwork(GetPlayer) then
+        return GetPlayer.Character:FindFirstChild("GRABBING_CONSTRAINT") and true or false
+    end
+    return false
+end
+
+function Alive(Player)
+    if Player and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") ~= nil and Player.Character:FindFirstChild("Humanoid") ~= nil and Player.Character:FindFirstChild("Head") ~= nil then
+        return true
+    end
+    return false
+end
+
+function CameraCheck(GetPosition, IgnoredList)
+    if IsNetwork(LocalPlayer) then
+        return #CurrentCamera:GetPartsObscuringTarget({LocalPlayer.Character.Head.Position, GetPosition}, IgnoredList) == 0 and true or false
+    end
+end
+
+function WallCheck(OriginPart, Part)
+    if IsNetwork(LocalPlayer) then
+        local IgnoreList = {CurrentCamera, LocalPlayer.Character, OriginPart.Parent}
+        local Parts = CurrentCamera:GetPartsObscuringTarget(
+            {
+                OriginPart.Position, 
+                Part.Position
+            },
+            IgnoreList
+        )
+    
+        for i, v in pairs(Parts) do
+            if v.Transparency >= 0.3 then
+                PuppyStorage.Instance[#PuppyStorage.Instance + 1] = v
+            end
+    
+            if v.Material == Enum.Material.Glass then
+                PuppyStorage.Instance[#PuppyStorage.Instance + 1] = v
+            end
+        end
+    
+        return #Parts == 0
+    end
+    return true
+end
+
+function NilBody()
+    if Alive(LocalPlayer) then
+        for i, v in pairs(LocalPlayer.Character:GetChildren()) do
+            if v:IsA("BasePart") or v:IsA("Part") or v:IsA("MeshPart") then
+                if v.Name ~= "HumanoidRootPart" then
+                    v:Destroy()
+                end
+            end
+        end
+    end
+end
+
+function ChanceTable(Table)
+    local Chance = 0
+    for i, v in pairs(Table) do
+        Chance = Chance + v
+    end
+    Chance = math.random(0, Chance)
+    for i, v in pairs(Table) do
+        Chance = Chance - v
+        if Chance <= 0 then
+            return i
+        end
+    end 
+end
+
+function RandomTable(Table)
+    local Values = 0
+    for i, v in pairs(Table) do
+        Values = i
+    end
+    
+    return Table[math.random(1, Values)]
+end
+
+local Plr
+local Pos
+local enabled = false
+local placemarker = Instance.new("Part", game.Workspace)
+
+function makemarker(Parent, Adornee, Color, Size, Size2)
+    local e = Instance.new("BillboardGui", Parent)
+    e.Name = "PP"
+    e.Adornee = Adornee
+    e.Size = UDim2.new(Size, Size2, Size, Size2)
+    e.AlwaysOnTop = true
+    local a = Instance.new("Frame", e)
+    a.Size = UDim2.new(1, 0, 1, 0)
+    a.Transparency = 0
+    a.BackgroundTransparency = 0
+    a.BackgroundColor3 = Color
+    local g = Instance.new("UICorner", a)
+    g.CornerRadius = UDim.new(50, 50)
+    return(e)
+end
+
+spawn(function()
+    placemarker.Anchored = true
+    placemarker.CanCollide = false
+    placemarker.Size = Vector3.new(8, 8, 8)
+    placemarker.Transparency = 0.79
+    makemarker(placemarker, placemarker, PuppySettings.SilentAim.DOTColor, 0.40, 0)
+end)    
+
+getgenv().islocked = false
+Mouse.KeyDown:connect(function(key)
+    if key:lower() == getgenv().SilentKeyy then 
+        if getgenv().islocked == false and PuppySettings.SilentAim.Enabled and PuppySettings.SilentAim.UseFOV == false then
+            if enabled == true then
+            else
+                enabled = true
+            end
+            getgenv().islocked = true
+            if PuppySettings.SilentAim.UseNearestDistance then
+    local NearestTarget, NearestPos = NearestDistance()
+    if NearestTarget and (not PuppySettings.SilentAim.UseFOV or PuppySettings.FOV.SilentAimSize > NearestPos) and (not PuppySettings.SilentAim.KnockedCheck or not Knocked(NearestTarget)) and (not PuppySettings.SilentAim.grabbedCheck or not Grabbed(NearestTarget)) and (not PuppySettings.SilentAim.WallCheck or WallCheck(NearestTarget.Character.HumanoidRootPart, LocalPlayer.Character.HumanoidRootPart)) then
+                Plr = NearestDistance()
+                Pos = NearestPos
+    end
+            else
+    local NearestTarget, NearestPos = NearestMouse()
+    if NearestTarget and (not PuppySettings.SilentAim.UseFOV or PuppySettings.FOV.SilentAimSize > NearestPos) and (not PuppySettings.SilentAim.KnockedCheck or not Knocked(NearestTarget)) and (not PuppySettings.SilentAim.grabbedCheck or not Grabbed(NearestTarget)) and (not PuppySettings.SilentAim.WallCheck or WallCheck(NearestTarget.Character.HumanoidRootPart, LocalPlayer.Character.HumanoidRootPart)) then
+                Plr = NearestMouse()
+                Pos = NearestPos
+    end
+            end
+            if PuppySettings.SilentAim.NotificationMode and Plr ~= game.Players.LocalPlayer then
+                Notify({
+                    Title = "Puppyware",
+                    Description = "Locked Onto: "..Plr.DisplayName,
+                    Duration = 3
+                })
+            end
+        elseif getgenv().islocked == true and PuppySettings.SilentAim.Enabled then
+            getgenv().islocked = false
+            enabled = false
+   Plr = game.Players.LocalPlayer
+            if PuppySettings.SilentAim.NotificationMode then
+                Notify({
+                    Title = "Puppyware",
+                    Description = "Unlocked",
+                    Duration = 3
+                })
+            end
+        end
+    end
+end)
+
+--//Random Hitbox
+local PuppyHitboxes = {
+ "Head","UpperTorso","LowerTorso"
+}
+
+game:GetService("RunService").Heartbeat:Connect(function()
+ if PuppySettings.AntiAim.Enabled == true and PuppySettings.AntiAim.Desync == true then
+  game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * PuppySettings.AntiAim.DesyncValues.Velocity
+  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(PuppySettings.AntiAim.DesyncValues.CFrame), 0)
+ end -- Anti Aim Desync
+ if PuppySettings.Misc.Antislow then
+     getgenv().DeletePart = game.Players.LocalPlayer.Character.BodyEffects.Movement:FindFirstChild('NoJumping') or player.Character.BodyEffects.Movement:FindFirstChild('ReduceWalk') or player.Character.BodyEffects.Movement:FindFirstChild('NoWalkSpeed')
+  if getgenv().DeletePart then getgenv().DeletePart:Destroy() end
+  if game.Players.LocalPlayer.Character.BodyEffects.Reload.Value == true then game.Players.LocalPlayer.Character.BodyEffects.Reload.Value = false end
+ end -- Anti Slow
+ if PuppySettings.Misc.CFrameSpeed.Bhop and LocalPlayer.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall then
+  LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+ end -- Bhop
+ if PuppySettings.Misc.Strafe then
+  if LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 and LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Freefall then
+   LocalPlayer.Character:TranslateBy(LocalPlayer.Character.Humanoid.MoveDirection / 3.1)
+  end
+ end -- Strafe
+ if PuppySettings.SilentAimSettings.PingPred1 and PuppySettings.SilentAim.Enabled then
+  getgenv().ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+  getgenv().Value = tostring(getgenv().ping)
+  getgenv().pingValue = getgenv().Value:split(" ")
+  local PingNumber = getgenv().pingValue[1]
+  getgenv().PredictionAmmount = PingNumber / 1000 + getgenv().Prediction
+  print(getgenv().PredictionAmmount)
+ end -- Ping Prediction 1
+ if PuppySettings.SilentAimSettings.PingPred2 and not PuppySettings.SilentAimSettings.PingPred1 and PuppySettings.SilentAim.Enabled then
+  pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+  split = string.split(pingvalue,'(')
+  ping = tonumber(split[1])
+    if ping < 130 then
+     PredictionValue = 0.151
+    elseif ping < 125 then
+     PredictionValue = 0.149
+    elseif ping < 110 then
+     PredictionValue = 0.146
+    elseif ping < 105 then
+     PredictionValue = 0.138
+    elseif ping < 90 then
+     PredictionValue = 0.136
+    elseif ping < 80 then
+     PredictionValue = 0.134
+    elseif ping < 70 then
+     PredictionValue = 0.131
+    elseif ping < 60 then
+     PredictionValue = 0.1229
+    elseif ping < 50 then
+     PredictionValue = 0.1225
+    elseif ping < 40 then
+     PredictionValue = 0.1256
+    end
+ end -- Ping Prediction 2
+ if PuppySettings.SilentAim.ShowFOV then
+  SilentAimFOV.Visible = true
+        SilentAimFOV.Radius = PuppySettings.FOV.SilentAimSize
+        SilentAimFOV.Filled = PuppySettings.FOV.FOVFilled
+        SilentAimFOV.Transparency = PuppySettings.FOV.Transparency
+        SilentAimFOV.NumSides = 100
+        SilentAimFOV.Thickness = PuppySettings.FOV.Thickness
+        SilentAimFOV.Color = PuppySettings.SilentAim.FOVColor
+        SilentAimFOV.Position = Vector2.new(Mouse.X, Mouse.Y + GuiInset.Y)
+    else
+        SilentAimFOV.Visible = false
+    end -- fov
+ if PuppySettings.TriggerBot.Enabled then
+  for i, v in next, Players:GetPlayers() do 
+   if Alive(v) then 
+    if Mouse.Target:IsDescendantOf(v.Character) and PuppySettings.TriggerBot.Enabled == true then 
+     mouse1press()
+     wait()
+     mouse1release()
+     wait(PuppySettings.TriggerBot.DelayAmount)
+    end 
+   end
+  end
+ end -- tb
+    if PuppySettings.SilentAim.UseFOV == true and PuppySettings.SilentAim.Enabled then
+        wait()
+        enabled = true
+        if PuppySettings.SilentAim.UseNearestDistance then
+            local NearestTarget, NearestPos = NearestDistance()
+            if NearestTarget and (not PuppySettings.SilentAim.UseFOV or PuppySettings.FOV.SilentAimSize > NearestPos) and (not PuppySettings.SilentAim.KnockedCheck or not Knocked(NearestTarget)) and (not PuppySettings.SilentAim.grabbedCheck or not Grabbed(NearestTarget)) and (not PuppySettings.SilentAim.WallCheck or WallCheck(NearestTarget.Character.HumanoidRootPart, LocalPlayer.Character.HumanoidRootPart)) then
+                Plr = NearestDistance()
+                Pos = NearestPos
+            end
+        else
+            local NearestTarget, NearestPos = NearestMouse()
+            if NearestTarget and (not PuppySettings.SilentAim.UseFOV or PuppySettings.FOV.SilentAimSize > NearestPos) and (not PuppySettings.SilentAim.KnockedCheck or not Knocked(NearestTarget)) and (not PuppySettings.SilentAim.grabbedCheck or not Grabbed(NearestTarget)) and (not PuppySettings.SilentAim.WallCheck or WallCheck(NearestTarget.Character.HumanoidRootPart, LocalPlayer.Character.HumanoidRootPart)) then
+                Plr = NearestMouse()
+                Pos = NearestPos
+            end
+        end
+    end -- use fov 
+    if PuppySettings.SilentAim.Enabled and enabled and Plr.Character and Plr.Character:FindFirstChild("HumanoidRootPart") and Plr ~= game.Players.LocalPlayer and PuppySettings.SilentAim.ShowHitbox then
+        if PuppySettings.SilentAim.RandomHitbox then
+            placemarker.CFrame = CFrame.new(Plr.Character[RandomTable(PuppyHitboxes)].Position + (Plr.Character[RandomTable(PuppyHitboxes)].Velocity * PuppySettings.SilentAimSettings.MovementPredictionAmount))
+  else
+            placemarker.CFrame = CFrame.new(Plr.Character[PuppySettings.SilentAim.Hitboxes].Position + (Plr.Character[PuppySettings.SilentAim.Hitboxes].Velocity * PuppySettings.SilentAimSettings.MovementPredictionAmount))
+  end
+    else
+        placemarker.CFrame = CFrame.new(0, 9999, 0)
+    end -- hitbox / dot
+    if getgenv().LegitAA then
+        if PuppySettings.AntiAim.FPSUnlocked == true then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.Humanoid.MoveDirection * -0.3
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.Humanoid.MoveDirection * -0.5
+        end
+    end -- legit aa
+    if getgenv().CFSpeed then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.Humanoid.MoveDirection * PuppySettings.Misc.CFrameSpeed.Speed
+    end -- cfspeed
+    if getgenv().Clicking then
+        mouse1click() 
+        wait(0.001)
+    end -- auto clciker
+end)
+
+-- SKY
+game:GetService("Lighting").Sky.SkyboxBk = "http://www.roblox.com/asset/?id=2571711090"
+                                game:GetService("Lighting").Sky.SkyboxDn = "http://www.roblox.com/asset/?id=2571711090"
+                                game:GetService("Lighting").Sky.SkyboxFt = "http://www.roblox.com/asset/?id=2571711090"
+                                game:GetService("Lighting").Sky.SkyboxLf = "http://www.roblox.com/asset/?id=2571711090"
+                                game:GetService("Lighting").Sky.SkyboxRt = "http://www.roblox.com/asset/?id=2571711090"
+                                game:GetService("Lighting").Sky.SkyboxUp = "http://www.roblox.com/asset/?id=2571711090"
