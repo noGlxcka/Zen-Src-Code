@@ -25,9 +25,9 @@ local PuppyModule = {
     Instance = {}
 }
 
-local Window = libary:new({name = "glxck cc || gui 🤑", accent = Color3.fromRGB(244, 0, 0), textsize = 13})
-local AimingTab = Window:page({name = "Camlock/Dot 💸"})
-local MiscTab = Window:page({name = "Misc 💰"})
+local Window = libary:new({name = "glxck cc", accent = Color3.fromRGB(244, 0, 0), textsize = 13})
+local AimingTab = Window:page({name = "Camlock/Dot "})
+local MiscTab = Window:page({name = "Misc "})
 
 local SAimSection = AimingTab:section({name = "Camlock", side = "left",size = 320})
 
