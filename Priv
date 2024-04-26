@@ -31,9 +31,8 @@ local AimingTab = Window:page({name = "Camlock/Dot "})
 local MiscTab = Window:page({name = "Misc "})
 
 local SAimSection = AimingTab:section({name = "Camlock", side = "left",size = 320})
+local AAMainSection = AimingTab:section({name = "Dot Lock", side = "left", size = 200})
 
-local AAMainSection = RageTab:section({name = "Dot Lock", side = "left", size = 200})
-local AASettings = RageTab:section({name = "Settings", side = "right", size = 200})
 
 local MiscMoveSettings = MiscTab:section({name = "Movement Cheats",side = "left", size = 200})
 local MiscToolSettings = MiscTab:section({name = "Tool Cheats",side = "left", size = 50})
