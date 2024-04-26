@@ -140,51 +140,64 @@ getgenv().Settings = {
     },
 }
 
-getgenv().DistancesMid = 50
-getgenv().DistancesClose = 10
-getgenv().AimSpeed = 1
-getgenv().CAMPREDICTION = 0.185
-getgenv().CAMJUMPPREDICTION = 0.1
-getgenv().HorizontalSmoothness = 1
-getgenv().VerticallSmoothness = 0.5
-getgenv().ShakeX = 0
-getgenv().ShakeY = 0
-getgenv().ShakeZ = 0
-getgenv().PREDICTION = 0.185
-getgenv().JUMPPREDICTION = 0.1
-getgenv().SelectedPart = "HumanoidRootPart" --// LowerTorso, UpperTorso, Head
-getgenv().Prediction = "Normal"
-getgenv().AutoPredType = "Normal"
-getgenv().Resolver = false
-local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+-- Assuming you have a way to get the LocalPlayer
+local player = game.Players.LocalPlayer
 
-local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+-- Check if the LocalPlayer is available
+if player then
+    -- Assign LocalPlayer to the Plr variable
+    local Plr = player
 
+    -- Other parts of your code
+    getgenv().DistancesMid = 50
+    getgenv().DistancesClose = 10
+    getgenv().AimSpeed = 1
+    getgenv().CAMPREDICTION = 0.185
+    getgenv().CAMJUMPPREDICTION = 0.1
+    getgenv().HorizontalSmoothness = 1
+    getgenv().VerticallSmoothness = 0.5
+    getgenv().ShakeX = 0
+    getgenv().ShakeY = 0
+    getgenv().ShakeZ = 0
+    getgenv().PREDICTION = 0.185
+    getgenv().JUMPPREDICTION = 0.1
+    getgenv().SelectedPart = "HumanoidRootPart" --// LowerTorso, UpperTorso, Head
+    getgenv().Prediction = "Normal"
+    getgenv().AutoPredType = "Normal"
+    getgenv().Resolver = false
 
-function SendNotification(text)
-    Notification:Notify(
-        {Title = "glxck.cc", Description = "GuessScript Sucking - "..text},
-        {OutlineColor = Color3.fromRGB(117, 14, 7),Time = 3, Type = "image"},
-        {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(117, 14, 7)}
-    )
-end
-function calculateVelocity(initialPos, finalPos, timeInterval)
-    local displacement = finalPos - initialPos
-    local velocity = displacement / timeInterval
-    return velocity
+    local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+    local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+
+    function SendNotification(text)
+        Notification:Notify(
+            {Title = "glxck.cc", Description = "GuessScript Sucking - "..text},
+            {OutlineColor = Color3.fromRGB(117, 14, 7),Time = 3, Type = "image"},
+            {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(117, 14, 7)}
+        )
     end
+
+    function calculateVelocity(initialPos, finalPos, timeInterval)
+        local displacement = finalPos - initialPos
+        local velocity = displacement / timeInterval
+        return velocity
+    end
+
     game:GetService('RunService').RenderStepped:connect(function(deltaTime)
-    if getgenv().Resolver == true and enabled then 
-        local character = Plr.Character[getgenv().SelectedPart]
-        local lastPosition = character.Position
-            task.wait()
-        local currentPosition = character.Position
-        local velocity = calculateVelocity(lastPosition, currentPosition, deltaTime)
-        character.AssemblyLinearVelocity = velocity
-        character.Velocity = velocity
-            lastPosition = currentPosition
+        if getgenv().Resolver == true and enabled and Plr then 
+            local character = Plr.Character
+            if character then
+                local lastPosition = character.HumanoidRootPart.Position
+                task.wait()
+                local currentPosition = character.HumanoidRootPart.Position
+                local velocity = calculateVelocity(lastPosition, currentPosition, deltaTime)
+                character.HumanoidRootPart.AssemblyLinearVelocity = velocity
+                character.HumanoidRootPart.Velocity = velocity
+                lastPosition = currentPosition
+            end
         end
     end)
+end
 
 --// Change Prediction,  AutoPrediction Must Be Off
     local lplr = game.Players.LocalPlayer
